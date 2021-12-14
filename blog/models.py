@@ -2,6 +2,9 @@ from django.db import models
 
 # Create your models here.
 
+class Tag(models.Model):
+    caption = models.CharField(max_length=20)
+
 class Author(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
@@ -16,3 +19,4 @@ class Post(models.Model):
     slug = models.SlugField(unique=True,db_index=True)
     content = models.TextField()
     author = models.ForeignKey(Author, on_delete= models.CASCADE, related_name="posts")
+    tag = models.ManyToManyField(Tag)
