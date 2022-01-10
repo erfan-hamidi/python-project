@@ -18,7 +18,7 @@ def get_date(post):
 
 class StartingPage(ListView):
   template_name = "blog/index.html"
-  modol = Post
+  model = Post
   ordering = ["-date"]
   context_object_name = "posts"
   
@@ -29,15 +29,15 @@ class StartingPage(ListView):
 
 class Posts(ListView):
   template_name = "blog/all-posts.html"
-  modol = Post
+  model = Post
   ordering = ["-date"]
   context_object_name = "all_posts"
 
 class PostDetail(DetailView):
   template_name = "blog/post-detail.html"
-  modol = Post
+  model = Post
 
   def get_context_data(self, **kwargs):
       context = super().get_context_data(**kwargs)
-      context["posts_tags"] = self.object.tags.all()
+      context["posts_tags"] = self.object.tag.all()
       return context
