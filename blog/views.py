@@ -4,7 +4,7 @@ from django.db.models.query import QuerySet
 from django.shortcuts import render , get_object_or_404
 
 from blog.models import Post
-from django.views.generic import ListView 
+from django.views.generic import ListView , DetailView
 
 all_posts = [
     
@@ -28,16 +28,12 @@ class StartingPage(ListView):
       return date
 
 class Posts(ListView):
-  template_name = "bblog/all-posts.html"
+  template_name = "blog/all-posts.html"
   modol = Post
   ordering = ["-date"]
   context_object_name = "all_posts"
 
+class PostDetail(DetailView):
+  template_name = "blog/post-detail.html"
+  modol = Post
 
-
-def post_detail(request, slug):
-    identified_post = get_object_or_404(Post, slug = slug)
-    return render(request, "blog/post-detail.html", {
-      "post": identified_post,
-      "post_tags": identified_post.tag.all()
-    })
