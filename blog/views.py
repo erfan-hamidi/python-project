@@ -37,3 +37,7 @@ class PostDetail(DetailView):
   template_name = "blog/post-detail.html"
   modol = Post
 
+  def get_context_data(self, **kwargs):
+      context = super().get_context_data(**kwargs)
+      context["posts_tags"] = self.object.tags.all()
+      return context
