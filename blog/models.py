@@ -35,7 +35,7 @@ class Post(models.Model):
     tag = models.ManyToManyField(Tag)
 
 
-class comment(models.Model):
+class Comment(models.Model):
     user_name = CharField(max_length=100)
     user_email = EmailField()
     text = CharField(max_length=500)
