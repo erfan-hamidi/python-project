@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models.fields import CharField, EmailField
+from django.db.models.fields import CharField, EmailField, TextField
 from django.db.models.fields.related import ForeignKey
 
 # Create your models here.
@@ -38,5 +38,6 @@ class Post(models.Model):
 class Comment(models.Model):
     user_name = CharField(max_length=100)
     user_email = EmailField()
-    text = CharField(max_length=500)
+    text = TextField(max_length=500)
     post = ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
+    
