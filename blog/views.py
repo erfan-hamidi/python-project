@@ -1,5 +1,8 @@
 from datetime import date
+from re import I
 from django.db.models.query import QuerySet
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 from django.shortcuts import render , get_object_or_404
 from .forms import CommentForm
@@ -35,8 +38,6 @@ class Posts(ListView):
   context_object_name = "all_posts"
 
 class PostDetail(View):
-  template_name = "blog/post-detail.html"
-  model = Post
 
   def get(self, req, slug):
     post = Post.objects.get(slug=slug)
@@ -47,11 +48,20 @@ class PostDetail(View):
     }
     return render(req, "blog/post-detail.html", context)
 
-  def post(self, req):
+  def post(self, req, slug):
+    comment_form = CommentForm(req.POST)
+    post = Post.objects.get(slug=slug)
 
+    if comment_form.is_valid():
+      comment = comment_form.save(commit=False)
+      comment.post = post
+      comment.save()
+      return HttpResponseRedirect(reverse("post-detail-page", args=[slug]))
 
-  def get_context_data(self, **kwargs):
-      context = super().get_context_data(**kwargs)
-      context["posts_tags"] = self.object.tag.all()
-      context["comment_form"] = CommentForm()
-      return context
+    context = {
+      "post": post,
+      "posts_tags" : Post.tag.all(),
+      "comment_form": CommentForm
+    }
+    return render(req, "blog/post-detail.html", context)
+
