@@ -4,9 +4,9 @@ from django.db.models.query import QuerySet
 from django.shortcuts import render , get_object_or_404
 from .forms import CommentForm
 
-from blog.models import Post
+from blog.models import Post, Tag
 from django.views.generic import ListView , DetailView
-
+from django.views import View
 all_posts = [
     
 ]
@@ -34,9 +34,21 @@ class Posts(ListView):
   ordering = ["-date"]
   context_object_name = "all_posts"
 
-class PostDetail(DetailView):
+class PostDetail(View):
   template_name = "blog/post-detail.html"
   model = Post
+
+  def get(self, req, slug):
+    post = Post.objects.get(slug=slug)
+    context = {
+      "post": post,
+      "posts_tags" : Post.tag.all(),
+      "comment_form": CommentForm()
+    }
+    return render(req, "blog/post-detail.html", context)
+
+  def post(self, req):
+
 
   def get_context_data(self, **kwargs):
       context = super().get_context_data(**kwargs)
