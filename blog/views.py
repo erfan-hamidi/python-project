@@ -43,7 +43,7 @@ class PostDetail(View):
     post = Post.objects.get(slug=slug)
     context = {
       "post": post,
-      "posts_tags" : Post.tag.all(),
+      "posts_tags" : post.tag.all(),
       "comment_form": CommentForm()
     }
     return render(req, "blog/post-detail.html", context)
@@ -60,7 +60,7 @@ class PostDetail(View):
 
     context = {
       "post": post,
-      "posts_tags" : Post.tag.all(),
+      "posts_tags" : post.tag.all(),
       "comment_form": CommentForm
     }
     return render(req, "blog/post-detail.html", context)
