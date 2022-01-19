@@ -44,7 +44,8 @@ class PostDetail(View):
     context = {
       "post": post,
       "posts_tags" : post.tag.all(),
-      "comment_form": CommentForm()
+      "comment_form": CommentForm(),
+      "comments": post.comments.all().order_by("-id")
     }
     return render(req, "blog/post-detail.html", context)
 
@@ -61,7 +62,8 @@ class PostDetail(View):
     context = {
       "post": post,
       "posts_tags" : post.tag.all(),
-      "comment_form": CommentForm
+      "comment_form": CommentForm,
+      "comments": post.comments.all().order_by("-id"),
     }
     return render(req, "blog/post-detail.html", context)
 
