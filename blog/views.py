@@ -67,3 +67,6 @@ class PostDetail(View):
     }
     return render(req, "blog/post-detail.html", context)
 
+class ReadLaterView(View):
+  def post(self, req):
+    pass
