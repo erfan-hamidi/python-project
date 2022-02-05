@@ -163,3 +163,23 @@ main {
 #comments h2 {
   color: #4b4b4b;
 }
+
+#read-later {
+  margin: 2rem 0;
+
+}
+
+#read-later button {
+  background-color: transparent;
+  border: 1px solid white;
+  padding: 0.5rem 2rem;
+  font: inherit;
+  cursor: pointer;
+  color: white;
+}
+
+#read-later button:hover,
+#read-later button:active {
+  background-color: white;
+  color: #390281;
+}
